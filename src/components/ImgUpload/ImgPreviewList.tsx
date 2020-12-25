@@ -81,6 +81,10 @@ const ImgPreviewList: React.FunctionComponent<IProps> = ({
         right: 0,
         bottom: 0,
         elevation: 2,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.5,
+        shadowRadius: 5,
       }}
     >
       <View
