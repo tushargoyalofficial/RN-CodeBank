@@ -1,0 +1,12 @@
+{
+  "name": "RNExpoCodeBank",
+  "displayName": "RNExpoCodeBank",
+  "expo": {
+    "name": "RNExpoCodeBank",
+    "slug": "RNExpoCodeBank",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
