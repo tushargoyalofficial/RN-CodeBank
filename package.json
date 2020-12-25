@@ -1,11 +1,13 @@
 {
   "main": "index.js",
   "scripts": {
+    "pretest": "ts-standard",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "web": "expo start --web",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "lint": "ts-standard --fix"
   },
   "dependencies": {
     "@expo/react-native-action-sheet": "^3.8.0",
@@ -32,6 +34,7 @@
     "@types/uuid": "^8.3.0",
     "babel-preset-expo": "~8.3.0",
     "jest-expo": "~40.0.0",
+    "ts-standard": "^10.0.0",
     "typescript": "~4.0.0"
   },
   "jest": {

@@ -1,20 +1,20 @@
-import * as React from "react";
-import { View, Button } from "react-native";
+import * as React from 'react'
+import { View, Button } from 'react-native'
 
 interface IProps {
-  onOpenActionSheet: () => void;
+  onOpenActionSheet: () => void
 }
 
 const ImgPickerButton: React.FunctionComponent<IProps> = ({
-  onOpenActionSheet,
+  onOpenActionSheet
 }: IProps) => (
   <View>
     <Button
-      color="#f44336"
-      title={"Select Image"}
+      color='#f44336'
+      title='Select Image'
       onPress={onOpenActionSheet}
     />
   </View>
-);
+)
 
-export default ImgPickerButton;
+export default ImgPickerButton
