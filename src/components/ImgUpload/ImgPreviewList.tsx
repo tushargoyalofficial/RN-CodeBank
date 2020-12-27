@@ -14,12 +14,14 @@ interface IProps {
   images: IImage[]
   onOpenActionSheet: () => void
   onSave: () => Promise<void>
+  loading: boolean
 }
 
 const ImgPreviewList: React.FunctionComponent<IProps> = ({
   images,
   onOpenActionSheet,
-  onSave
+  onSave,
+  loading
 }: IProps) => (
   <SafeAreaView
     style={{ flex: 1, width: '100%', marginTop: StatusBar.currentHeight || 0 }}
@@ -108,6 +110,7 @@ const ImgPreviewList: React.FunctionComponent<IProps> = ({
           }}
           android_ripple={{ color: 'yellow' }}
           onPress={onSave}
+          disabled={loading}
         >
           <Text
             style={{
