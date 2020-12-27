@@ -28,7 +28,7 @@ const ImgUpload: React.FunctionComponent = () => {
         cancelButtonIndex,
         destructiveButtonIndex
       },
-      (buttonIndex) => {
+      (buttonIndex): void => {
         switch (buttonIndex) {
           case 0:
             openCamera()
@@ -60,7 +60,7 @@ const ImgUpload: React.FunctionComponent = () => {
           const newImageUri = 'file:///' + result.uri.split('file:/').join('')
           const img = {
             id: uuidv4(),
-            name: newImageUri.split('/').pop() || `Image-${uuidv4()}`,
+            name: newImageUri.split('/').pop() ?? `Image-${uuidv4()}`,
             type: mime.getType(newImageUri),
             uri: newImageUri
           }
@@ -92,7 +92,7 @@ const ImgUpload: React.FunctionComponent = () => {
           const newImageUri = 'file:///' + result.uri.split('file:/').join('')
           const img = {
             id: uuidv4(),
-            name: newImageUri.split('/').pop() || `Image-${uuidv4()}`,
+            name: newImageUri.split('/').pop() ?? `Image-${uuidv4()}`,
             type: mime.getType(newImageUri),
             uri: newImageUri
           }
@@ -107,7 +107,7 @@ const ImgUpload: React.FunctionComponent = () => {
     }
   }
 
-  const createFormData = (uri: any, body: any) => {
+  const createFormData = (uri: any, body: any): FormData => {
     const data = new FormData()
     data.append('photo', {
       // @ts-expect-error
@@ -125,18 +125,16 @@ const ImgUpload: React.FunctionComponent = () => {
 
   const onSave = async (): Promise<void> => {
     isLoading(true)
-    if (!images.length) {
+    if (images.length === 0) {
       alert('Please select atleast one image!')
       isLoading(false)
       return
     }
     const fd: FormData = createFormData(images[0].uri, { userId: '123' })
-    fetch('https://rnexpo-server.herokuapp.com/api/upload', {
+    fetch('https://rnexpo-server.herokuapp.com/image/upload', {
       method: 'POST',
-      headers: new Headers({
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }),
       body: fd
+      // no header required as FETCH will set it automatically
     })
       .then(async (response) => await response.json())
       .then((response) => {

@@ -24,14 +24,14 @@ const ImgPreviewList: React.FunctionComponent<IProps> = ({
   loading
 }: IProps) => (
   <SafeAreaView
-    style={{ flex: 1, width: '100%', marginTop: StatusBar.currentHeight || 0 }}
+    style={{ flex: 1, width: '100%', marginTop: StatusBar.currentHeight ?? 0 }}
   >
     <View style={{ flex: 0.86, marginHorizontal: 12 }}>
       <FlatList
         data={images}
         numColumns={2}
         renderItem={({ item }) =>
-          item.id !== 'null' && item.uri ? (
+          item.id !== 'null' && item.uri !== '' ? (
             <View
               style={{
                 width: '46%',
