@@ -107,46 +107,61 @@ const ImgUpload: React.FunctionComponent = () => {
     }
   }
 
-  const createFormData = (uri: any, body: any): FormData => {
+  const createFormData = (body?: any): FormData => {
     const data = new FormData()
-    data.append('photo', {
-      // @ts-expect-error
-      uri: uri,
-      type: mime.getType(uri),
-      name: uri.split('/').pop()
-    })
 
-    Object.keys(body).forEach((key) => {
-      data.append(key, body[key])
-    })
+    if (images.length > 1) {
+      for (const file of images) {
+        if (file.uri && file.type && file.id !== 'null') {
+          data.append('photo', {
+            // @ts-expect-error
+            uri: file.uri,
+            type: file.type || 'image/jpeg',
+            name: file.name
+          })
+        }
+      }
+    }
+
+    if (body) {
+      Object.keys(body).forEach((key) => {
+        data.append(key, body[key])
+      })
+    }
 
     return data
   }
 
   const onSave = async (): Promise<void> => {
     isLoading(true)
-    if (images.length === 0) {
+
+    if (images.length === 1) {
       alert('Please select atleast one image!')
       isLoading(false)
       return
     }
-    const fd: FormData = createFormData(images[0].uri, { userId: '123' })
-    fetch('https://rnexpo-server.herokuapp.com/image/upload', {
-      method: 'POST',
-      body: fd
-      // no header required as FETCH will set it automatically
-    })
-      .then(async (response) => await response.json())
-      .then((response) => {
-        console.log('upload succes', response)
-        Alert.alert('Upload Response', response.message)
-        isLoading(false)
+
+    const fd: FormData = createFormData()
+
+    try {
+      const response = await fetch('https://rnexpo-server.herokuapp.com/image/uploadmultiple', {
+        method: 'POST',
+        body: fd
       })
-      .catch((error) => {
-        console.log('upload error', error)
-        alert('Upload failed!')
-        isLoading(false)
-      })
+
+      if (!response.ok) {
+        throw Error(response.statusText)
+      }
+
+      const res = await response.json()
+      console.log('upload succes', res)
+      Alert.alert('Upload Response', res.message)
+      isLoading(false)
+    } catch (error) {
+      console.log('upload error', error)
+      alert('Upload failed!')
+      isLoading(false)
+    }
   }
 
   return (

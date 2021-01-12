@@ -101,10 +101,10 @@ const ImgPreviewList: React.FunctionComponent<IProps> = ({
             justifyContent: 'center',
             alignItems: 'center',
             borderWidth: 1,
-            borderColor: 'orange',
+            borderColor: loading ? 'lightgrey' : 'orange',
             width: '90%',
             height: 46,
-            backgroundColor: 'orange',
+            backgroundColor: loading ? 'lightgrey' : 'orange',
             borderRadius: 12,
             elevation: 10
           }}
